@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1098826685975",
+    "firebase_url": "https://homedashboard-b0967.firebaseio.com",
+    "project_id": "homedashboard-b0967",
+    "storage_bucket": "homedashboard-b0967.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098826685975:android:32a9be84c113cd4dbd0652",
+        "android_client_info": {
+          "package_name": "com.pkmunla.asus.homedashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098826685975-gtlg7aefjkq8ddb64dp424phs3kmt7dk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pkmunla.asus.homedashboard",
+            "certificate_hash": "d7bc758cc3f3ec3eed9a77b1312693b840f6ae6a"
+          }
+        },
+        {
+          "client_id": "1098826685975-15t0sfe8lb18vq4kj3fd3adbrppjacbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz6XzhNPZISvoDp0rWjnOjZNOPZJ2tT8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098826685975-15t0sfe8lb18vq4kj3fd3adbrppjacbd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

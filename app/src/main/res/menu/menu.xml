@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android1="http://schemas.android.com/apk/res/android">
+
+    <item
+        android1:id="@+id/action_search"
+        android1:title="Cari"
+        android1:icon="@drawable/ic_action_name"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/account"
+        android:title="profile"
+        android:icon="@drawable/ic_action_account"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/setting"
+        android:title="setting"/>
+
+
+</menu>

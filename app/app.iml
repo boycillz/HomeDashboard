@@ -1,0 +1,452 @@
+())
+                + ((null == mDataOperatorAlphaShort) ? 0 : mDataOperatorAlphaShort.hashCode())
+                + ((null == mDataOperatorNumeric) ? 0 : mDataOperatorNumeric.hashCode())
+                + mCdmaRoamingIndicator
+                + mCdmaDefaultRoamingIndicator
+                + (mIsEmergencyOnly ? 1 : 0)
+                + (mIsDataRoamingFromRegistration ? 1 : 0));
+    }
+
+    @Override
+    public boolean equals (Object o) {
+        ServiceState s;
+
+        try {
+            s = (ServiceState) o;
+        } catch (ClassCastException ex) {
+            return false;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        return (mVoiceRegState == s.mVoiceRegState
+                && mDataRegState == s.mDataRegState
+                && mIsManualNetworkSelection == s.mIsManualNetworkSelection
+                && mVoiceRoamingType == s.mVoiceRoamingType
+                && mDataRoamingType == s.mDataRoamingType
+                && equalsHandlesNulls(mVoiceOperatorAlphaLong, s.mVoiceOperatorAlphaLong)
+                && equalsHandlesNulls(mVoiceOperatorAlphaShort, s.mVoiceOperatorAlphaShort)
+                && equalsHandlesNulls(mVoiceOperatorNumeric, s.mVoiceOperatorNumeric)
+                && equalsHandlesNulls(mDataOperatorAlphaLong, s.mDataOperatorAlphaLong)
+                && equalsHandlesNulls(mDataOperatorAlphaShort, s.mDataOperatorAlphaShort)
+                && equalsHandlesNulls(mDataOperatorNumeric, s.mDataOperatorNumeric)
+                && equalsHandlesNulls(mRilVoiceRadioTechnology, s.mRilVoiceRadioTechnology)
+                && equalsHandlesNulls(mRilDataRadioTechnology, s.mRilDataRadioTechnology)
+                && equalsHandlesNulls(mCssIndicator, s.mCssIndicator)
+                && equalsHandlesNulls(mNetworkId, s.mNetworkId)
+                && equalsHandlesNulls(mSystemId, s.mSystemId)
+                && equalsHandlesNulls(mCdmaRoamingIndicator, s.mCdmaRoamingIndicator)
+                && equalsHandlesNulls(mCdmaDefaultRoamingIndicator,
+                        s.mCdmaDefaultRoamingIndicator)
+                && mIsEmergencyOnly == s.mIsEmergencyOnly
+                && mIsDataRoamingFromRegistration == s.mIsDataRoamingFromRegistration
+                && mIsUsingCarrierAggregation == s.mIsUsingCarrierAggregation);
+    }
+
+    /**
+     * Convert radio technology to String
+     *
+     * @param radioTechnology
+     * @return String representation of the RAT
+     *
+     * @hide
+     */
+    public static String rilRadioTechnologyToString(int rt) {
+        String rtString;
+
+        switch(rt) {
+            case RIL_RADIO_TECHNOLOGY_UNKNOWN:
+                rtString = "Unknown";
+                break;
+            case RIL_RADIO_TECHNOLOGY_GPRS:
+                rtString = "GPRS";
+                break;
+            case RIL_RADIO_TECHNOLOGY_EDGE:
+                rtString = "EDGE";
+                break;
+            case RIL_RADIO_TECHNOLOGY_UMTS:
+                rtString = "UMTS";
+                break;
+            case RIL_RADIO_TECHNOLOGY_IS95A:
+                rtString = "CDMA-IS95A";
+                break;
+            case RIL_RADIO_TECHNOLOGY_IS95B:
+                rtString = "CDMA-IS95B";
+                break;
+            case RIL_RADIO_TECHNOLOGY_1xRTT:
+                rtString = "1xRTT";
+                break;
+            case RIL_RADIO_TECHNOLOGY_EVDO_0:
+                rtString = "EvDo-rev.0";
+                break;
+            case RIL_RADIO_TECHNOLOGY_EVDO_A:
+                rtString = "EvDo-rev.A";
+                break;
+            case RIL_RADIO_TECHNOLOGY_HSDPA:
+                rtString = "HSDPA";
+                break;
+            case RIL_RADIO_TECHNOLOGY_HSUPA:
+                rtString = "HSUPA";
+                break;
+            case RIL_RADIO_TECHNOLOGY_HSPA:
+                rtString = "HSPA";
+                break;
+            case RIL_RADIO_TECHNOLOGY_EVDO_B:
+                rtString = "EvDo-rev.B";
+                break;
+            case RIL_RADIO_TECHNOLOGY_EHRPD:
+                rtString = "eHRPD";
+                break;
+            case RIL_RADIO_TECHNOLOGY_LTE:
+                rtString = "LTE";
+                break;
+            case RIL_RADIO_TECHNOLOGY_HSPAP:
+                rtString = "HSPAP";
+                break;
+            case RIL_RADIO_TECHNOLOGY_GSM:
+                rtString = "GSM";
+                break;
+            case RIL_RADIO_TECHNOLOGY_IWLAN:
+                rtString = "IWLAN";
+                break;
+            case RIL_RADIO_TECHNOLOGY_TD_SCDMA:
+                rtString = "TD-SCDMA";
+                break;
+            case RIL_RADIO_TECHNOLOGY_LTE_CA:
+                rtString = "LTE_CA";
+                break;
+            default:
+                rtString = "Unexpected";
+                Rlog.w(LOG_TAG, "Unexpected radioTechnology=" + rt);
+                break;
+        }
+        return rtString;
+    }
+
+    @Override
+    public String toString() {
+        String radioTechnology = rilRadioTechnologyToString(mRilVoiceRadioTechnology);
+        String dataRadioTechnology = rilRadioTechnologyToString(mRilDataRadioTechnology);
+
+        return (mVoiceRegState + " " + mDataRegState
+                + " "
+                + "voice " + getRoamingLogString(mVoiceRoamingType)
+                + " "
+                + "data " + getRoamingLogString(mDataRoamingType)
+                + " " + mVoiceOperatorAlphaLong
+                + " " + mVoiceOperatorAlphaShort
+                + " " + mVoiceOperatorNumeric
+                + " " + mDataOperatorAlphaLong
+                + " " + mDataOperatorAlphaShort
+                + " " + mDataOperatorNumeric
+                + " " + (mIsManualNetworkSelection ? "(manual)" : "")
+                + " " + radioTechnology
+                + " " + dataRadioTechnology
+                + " " + (mCssIndicator ? "CSS supported" : "CSS not supported")
+                + " " + mNetworkId
+                + " " + mSystemId
+                + " RoamInd=" + mCdmaRoamingIndicator
+                + " DefRoamInd=" + mCdmaDefaultRoamingIndicator
+                + " EmergOnly=" + mIsEmergencyOnly
+                + " IsDataRoamingFromRegistration=" + mIsDataRoamingFromRegistration
+                + " IsUsingCarrierAggregation=" + mIsUsingCarrierAggregation);
+    }
+
+    private void setNullState(int state) {
+        if (DBG) Rlog.d(LOG_TAG, "[ServiceState] setNullState=" + state);
+        mVoiceRegState = state;
+        mDataRegState = state;
+        mVoiceRoamingType = ROAMING_TYPE_NOT_ROAMING;
+        mDataRoamingType = ROAMING_TYPE_NOT_ROAMING;
+        mVoiceOperatorAlphaLong = null;
+        mVoiceOperatorAlphaShort = null;
+        mVoiceOperatorNumeric = null;
+        mDataOperatorAlphaLong = null;
+        mDataOperatorAlphaShort = null;
+        mDataOperatorNumeric = null;
+        mIsManualNetworkSelection = false;
+        mRilVoiceRadioTechnology = 0;
+        mRilDataRadioTechnology = 0;
+        mCssIndicator = false;
+        mNetworkId = -1;
+        mSystemId = -1;
+        mCdmaRoamingIndicator = -1;
+        mCdmaDefaultRoamingIndicator = -1;
+        mCdmaEriIconIndex = -1;
+        mCdmaEriIconMode = -1;
+        mIsEmergencyOnly = false;
+        mIsDataRoamingFromRegistration = false;
+        mIsUsingCarrierAggregation = false;
+    }
+
+    public void setStateOutOfService() {
+        setNullState(STATE_OUT_OF_SERVICE);
+    }
+
+    public void setStateOff() {
+        setNullState(STATE_POWER_OFF);
+    }
+
+    public void setState(int state) {
+        setVoiceRegState(state);
+        if (DBG) Rlog.e(LOG_TAG, "[ServiceState] setState deprecated use setVoiceRegState()");
+    }
+
+    /** @hide */
+    public void setVoiceRegState(int state) {
+        mVoiceRegState = state;
+        if (DBG) Rlog.d(LOG_TAG, "[ServiceState] setVoiceRegState=" + mVoiceRegState);
+    }
+
+    /** @hide */
+    public void setDataRegState(int state) {
+        mDataRegState = state;
+        if (VDBG) Rlog.d(LOG_TAG, "[ServiceState] setDataRegState=" + mDataRegState);
+    }
+
+    public void setRoaming(boolean roaming) {
+        mVoiceRoamingType = (roaming ? ROAMING_TYPE_UNKNOWN : ROAMING_TYPE_NOT_ROAMING);
+        mDataRoamingType = mVoiceRoamingType;
+    }
+
+    /** @hide */
+    public void setVoiceRoaming(boolean roaming) {
+        mVoiceRoamingType = (roaming ? ROAMING_TYPE_UNKNOWN : ROAMING_TYPE_NOT_ROAMING);
+    }
+
+    /** @hide */
+    public void setVoiceRoamingType(int type) {
+        mVoiceRoamingType = type;
+    }
+
+    /** @hide */
+    public void setDataRoaming(boolean dataRoaming) {
+        mDataRoamingType = (dataRoaming ? ROAMING_TYPE_UNKNOWN : ROAMING_TYPE_NOT_ROAMING);
+    }
+
+    /** @hide */
+    public void setDataRoamingType(int type) {
+        mDataRoamingType = type;
+    }
+
+    /**
+     * @hide
+     */
+    public void setEmergencyOnly(boolean emergencyOnly) {
+        mIsEmergencyOnly = emergencyOnly;
+    }
+
+    /**
+     * @hide
+     */
+    public void setCdmaRoamingIndicator(int roaming) {
+        this.mCdmaRoamingIndicator = roaming;
+    }
+
+    /**
+     * @hide
+     */
+    public void setCdmaDefaultRoamingIndicator (int roaming) {
+        this.mCdmaDefaultRoamingIndicator = roaming;
+    }
+
+    /**
+     * @hide
+     */
+    public void setCdmaEriIconIndex(int index) {
+        this.mCdmaEriIconIndex = index;
+    }
+
+    /**
+     * @hide
+     */
+    public void setCdmaEriIconMode(int mode) {
+        this.mCdmaEriIconMode = mode;
+    }
+
+    public void setOperatorName(String longName, String shortName, String numeric) {
+        mVoiceOperatorAlphaLong = longName;
+        mVoiceOperatorAlphaShort = shortName;
+        mVoiceOperatorNumeric = numeric;
+        mDataOperatorAlphaLong = longName;
+        mDataOperatorAlphaShort = shortName;
+        mDataOperatorNumeric = numeric;
+    }
+
+    /** @hide */
+    public void setVoiceOperatorName(String longName, String shortName, String numeric) {
+        mVoiceOperatorAlphaLong = longName;
+        mVoiceOperatorAlphaShort = shortName;
+        mVoiceOperatorNumeric = numeric;
+    }
+
+    /** @hide */
+    public void setDataOperatorName(String longName, String shortName, String numeric) {
+        mDataOperatorAlphaLong = longName;
+        mDataOperatorAlphaShort = shortName;
+        mDataOperatorNumeric = numeric;
+    }
+
+    /**
+     * In CDMA, mOperatorAlphaLong can be set from the ERI text.
+     * This is done from the GsmCdmaPhone and not from the ServiceStateTracker.
+     *
+     * @hide
+     */
+    public void setOperatorAlphaLong(String longName) {
+        mVoiceOperatorAlphaLong = longName;
+        mDataOperatorAlphaLong = longName;
+    }
+
+    /** @hide */
+    public void setVoiceOperatorAlphaLong(String longName) {
+        mVoiceOperatorAlphaLong = longName;
+    }
+
+    /** @hide */
+    public void setDataOperatorAlphaLong(String longName) {
+        mDataOperatorAlphaLong = longName;
+    }
+
+    public void setIsManualSelection(boolean isManual) {
+        mIsManualNetworkSelection = isManual;
+    }
+
+    /**
+     * Test whether two objects hold the same data values or both are null.
+     *
+     * @param a first obj
+     * @param b second obj
+     * @return true if two objects equal or both are null
+     */
+    private static boolean equalsHandlesNulls (Object a, Object b) {
+        return (a == null) ? (b == null) : a.equals (b);
+    }
+
+    /**
+     * Set ServiceState based on intent notifier map.
+     *
+     * @param m intent notifier map
+     * @hide
+     */
+    private void setFromNotifierBundle(Bundle m) {
+        mVoiceRegState = m.getInt("voiceRegState");
+        mDataRegState = m.getInt("dataRegState");
+        mVoiceRoamingType = m.getInt("voiceRoamingType");
+        mDataRoamingType = m.getInt("dataRoamingType");
+        mVoiceOperatorAlphaLong = m.getString("operator-alpha-long");
+        mVoiceOperatorAlphaShort = m.getString("operator-alpha-short");
+        mVoiceOperatorNumeric = m.getString("operator-numeric");
+        mDataOperatorAlphaLong = m.getString("data-operator-alpha-long");
+        mDataOperatorAlphaShort = m.getString("data-operator-alpha-short");
+        mDataOperatorNumeric = m.getString("data-operator-numeric");
+        mIsManualNetworkSelection = m.getBoolean("manual");
+        mRilVoiceRadioTechnology = m.getInt("radioTechnology");
+        mRilDataRadioTechnology = m.getInt("dataRadioTechnology");
+        mCssIndicator = m.getBoolean("cssIndicator");
+        mNetworkId = m.getInt("networkId");
+        mSystemId = m.getInt("systemId");
+        mCdmaRoamingIndicator = m.getInt("cdmaRoamingIndicator");
+        mCdmaDefaultRoamingIndicator = m.getInt("cdmaDefaultRoamingIndicator");
+        mIsEmergencyOnly = m.getBoolean("emergencyOnly");
+        mIsDataRoamingFromRegistration = m.getBoolean("isDataRoamingFromRegistration");
+        mIsUsingCarrierAggregation = m.getBoolean("isUsingCarrierAggregation");
+    }
+
+    /**
+     * Set intent notifier Bundle based on service state.
+     *
+     * @param m intent notifier Bundle
+     * @hide
+     */
+    public void fillInNotifierBundle(Bundle m) {
+        m.putInt("voiceRegState", mVoiceRegState);
+        m.putInt("dataRegState", mDataRegState);
+        m.putInt("voiceRoamingType", mVoiceRoamingType);
+        m.putInt("dataRoamingType", mDataRoamingType);
+        m.putString("operator-alpha-long", mVoiceOperatorAlphaLong);
+        m.putString("operator-alpha-short", mVoiceOperatorAlphaShort);
+        m.putString("operator-numeric", mVoiceOperatorNumeric);
+        m.putString("data-operator-alpha-long", mDataOperatorAlphaLong);
+        m.putString("data-operator-alpha-short", mDataOperatorAlphaShort);
+        m.putString("data-operator-numeric", mDataOperatorNumeric);
+        m.putBoolean("manual", Boolean.valueOf(mIsManualNetworkSelection));
+        m.putInt("radioTechnology", mRilVoiceRadioTechnology);
+        m.putInt("dataRadioTechnology", mRilDataRadioTechnology);
+        m.putBoolean("cssIndicator", mCssIndicator);
+        m.putInt("networkId", mNetworkId);
+        m.putInt("systemId", mSystemId);
+        m.putInt("cdmaRoamingIndicator", mCdmaRoamingIndicator);
+        m.putInt("cdmaDefaultRoamingIndicator", mCdmaDefaultRoamingIndicator);
+        m.putBoolean("emergencyOnly", Boolean.valueOf(mIsEmergencyOnly));
+        m.putBoolean("isDataRoamingFromRegistration", Boolean.valueOf(mIsDataRoamingFromRegistration));
+        m.putBoolean("isUsingCarrierAggregation", Boolean.valueOf(mIsUsingCarrierAggregation));
+    }
+
+    /** @hide */
+    public void setRilVoiceRadioTechnology(int rt) {
+        if (rt == RIL_RADIO_TECHNOLOGY_LTE_CA) {
+            rt = RIL_RADIO_TECHNOLOGY_LTE;
+        }
+
+        this.mRilVoiceRadioTechnology = rt;
+    }
+
+    /** @hide */
+    public void setRilDataRadioTechnology(int rt) {
+        if (rt == RIL_RADIO_TECHNOLOGY_LTE_CA) {
+            rt = RIL_RADIO_TECHNOLOGY_LTE;
+            this.mIsUsingCarrierAggregation = true;
+        } else {
+            this.mIsUsingCarrierAggregation = false;
+        }
+        this.mRilDataRadioTechnology = rt;
+        if (VDBG) Rlog.d(LOG_TAG, "[ServiceState] setRilDataRadioTechnology=" +
+                mRilDataRadioTechnology);
+    }
+
+    /** @hide */
+    public boolean isUsingCarrierAggregation() {
+        return mIsUsingCarrierAggregation;
+    }
+
+    /** @hide */
+    public void setIsUsingCarrierAggregation(boolean ca) {
+        mIsUsingCarrierAggregation = ca;
+    }
+
+    /** @hide */
+    public void setCssIndicator(int css) {
+        this.mCssIndicator = (css != 0);
+    }
+
+    /** @hide */
+    public void setSystemAndNetworkId(int systemId, int networkId) {
+        this.mSystemId = systemId;
+        this.mNetworkId = networkId;
+    }
+
+    /** @hide */
+    public int getRilVoiceRadioTechnology() {
+        return this.mRilVoiceRadioTechnology;
+    }
+    /** @hide */
+    public int getRilDataRadioTechnology() {
+        return this.mRilDataRadioTechnology;
+    }
+    /**
+     * @hide
+     * @Deprecated to be removed Q3 2013 use {@link #getRilDataRadioTechnology} or
+     * {@link #getRilVoiceRadioTechnology}
+     */
+    public int getRadioTechnology() {
+        Rlog.e(LOG_TAG, "ServiceState.getRadioTechnology() DEPRECATED will be removed *******");
+        return getRilDataRadioTechnology();
+    }
+
+    private int rilRadioTechnologyToNetworkType(int rt) {
+        switch(rt) {
+        case ServiceState.RIL_RADIO_TECHNOLOGY_GPRS:
+            return TelephonyManager.NETWORK_TYPE_GPRS
